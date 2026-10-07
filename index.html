@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SarmataSlot - Exclusive Welcome Offer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            300: '#FFE885',
+                            400: '#FDE047',
+                            500: '#EAB308',
+                            600: '#CA8A04',
+                            glow: '#FFD700'
+                        },
+                        darkbg: '#080a0f',
+                        cardbg: '#121824',
+                        accentgreen: '#10B981',
+                        accentgreenhover: '#059669',
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)' },
+                            '100%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.9)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Prevent FOUC (Flash of Unstyled Content) during country rendering */
+        body {
+            background-color: #080a0f;
+            color: #f3f4f6;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease-in;
+        }
+
+        body.ready {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF5C0 0%, #EAB308 50%, #B45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-btn-primary {
+            background: linear-gradient(180deg, #10B981 0%, #047857 100%);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn-primary:hover {
+            background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.9), inset 0 2px 6px rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .gold-border-glow {
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.15);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-container:hover .animate-marquee {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-black pb-20 md:pb-0">
+
+    <!-- Top Regional Licensing Bar -->
+    <div class="bg-gradient-to-r from-yellow-950 via-yellow-900 to-yellow-950 text-white py-1.5 px-3 text-[11px] sm:text-xs font-semibold tracking-wide border-b border-gold-500/30">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-1.5 mx-auto sm:mx-0">
+                <span id="geo-flag-icon" class="text-base">🌐</span>
+                <span id="geo-license-text" class="uppercase tracking-wider">Licensed & Regulated Gaming Platform</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6 text-xs text-yellow-100">
+                <span id="geo-feature-1"><i class="fa-solid fa-bolt text-gold-400 mr-1"></i> Instant Local Withdrawals</span>
+                <span id="geo-feature-2"><i class="fa-solid fa-shield-halved text-gold-400 mr-1"></i> 100% Legal & Encrypted Play</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="bg-darkbg/95 backdrop-blur-md sticky top-0 z-40 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 h-16 sm:h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-gold-600 to-gold-400 flex items-center justify-center shadow-lg shadow-gold-500/20">
+                    <i class="fa-solid fa-crown text-black text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <span id="brand-name" class="text-lg sm:text-2xl font-black tracking-wider text-white">SARMATA<span class="text-gold-500">SLOT</span></span>
+                    <span class="block text-[8px] sm:text-[9px] text-gray-400 tracking-widest uppercase -mt-1">PREMIUM VIP CLUB</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Payment Badges in Header -->
+            <div class="hidden lg:flex items-center space-x-2 bg-cardbg/80 px-4 py-1.5 rounded-xl border border-gray-800" id="header-payment-badges">
+                <!-- Injected dynamically via JS -->
+            </div>
+
+            <div>
+                <a href="#" class="btn-buy cta-btn-primary px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-extrabold text-white text-xs sm:text-base flex items-center gap-1.5 tracking-wider claim-link">
+                    <i class="fa-solid fa-gift"></i>
+                    <span class="cta-text">CLAIM BONUS</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee Winner Ticker -->
+    <section class="bg-cardbg/90 border-b border-gray-800 py-2.5 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 flex items-center text-xs">
+            <div class="flex items-center space-x-1.5 text-gold-400 font-bold uppercase tracking-wider shrink-0 mr-3 border-r border-gray-700 pr-3 text-[11px] sm:text-xs z-10 bg-cardbg/90">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <i class="fa-solid fa-trophy"></i> LIVE WINNERS
+            </div>
+            
+            <div class="overflow-hidden relative w-full marquee-container">
+                <div class="animate-marquee whitespace-nowrap text-gray-300 font-medium text-xs" id="marquee-ticker">
+                    <!-- Dynamic live wins injected via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Hero Section -->
+    <section class="relative pt-6 sm:pt-10 pb-8 sm:pb-16 overflow-hidden bg-gradient-to-b from-darkbg via-cardbg to-darkbg">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-gold-500/10 rounded-full blur-[100px] sm:blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <!-- Dynamic Country Badge -->
+            <div class="inline-flex items-center gap-1.5 bg-yellow-950/80 border border-gold-500/40 px-4 py-1.5 rounded-full text-xs text-gold-200 font-bold mb-4 shadow-lg">
+                <span id="geo-pill-flag">🌐</span> <span id="geo-pill-notice">EXCLUSIVE OFFER FOR YOUR REGION</span>
+            </div>
+            
+            <!-- Dynamic Main Offer Headlines -->
+            <h1 class="text-2xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+                150% UP TO <span id="dynamic-bonus-amount" class="gold-gradient-text">1,000 EUR</span>
+            </h1>
+            <div id="dynamic-bonus-sub" class="text-lg sm:text-3xl font-extrabold text-emerald-400 mt-1 sm:mt-2 tracking-wide uppercase">
+                + 50 FREE SPINS + LUCKY WHEEL
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="mt-3 inline-flex items-center gap-2 bg-black/60 border border-gray-800 px-3 py-1 rounded-lg text-xs text-gray-300">
+                <i class="fa-solid fa-clock text-gold-400"></i>
+                <span>Offer expires in: <strong id="timer" class="text-gold-400 font-mono">14:59</strong></span>
+            </div>
+
+            <!-- Key Feature Bullets -->
+            <div class="my-5 sm:my-8 max-w-lg mx-auto bg-darkbg/80 border border-gray-800 rounded-2xl p-4 sm:p-6 text-left shadow-2xl gold-border-glow">
+                <ul class="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm text-gray-200 font-semibold" id="dynamic-benefits">
+                    <!-- Injected dynamically via JS -->
+                </ul>
+            </div>
+
+            <!-- Main CTA Button -->
+            <div class="max-w-md mx-auto">
+                <a href="#" class="btn-buy cta-btn-primary w-full py-4 sm:py-5 rounded-2xl font-black text-lg sm:text-2xl text-white text-center tracking-wider uppercase block mb-3 animate-pulse-fast shadow-2xl claim-link">
+                    <span class="cta-text">CLAIM BONUS NOW</span> <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i>
+                </a>
+
+                <div class="flex items-center justify-center gap-3 text-[11px] sm:text-xs text-gray-400">
+                    <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Certified Fair Play</span>
+                    <span>&bull;</span>
+                    <span><i class="fa-solid fa-lock text-gold-400 mr-1"></i> 256-Bit SSL Encryption</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Payment Badges Bar -->
+    <section class="py-6 sm:py-8 bg-black/80 border-y border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">FAST & SECURE LOCAL PAYMENT METHODS</p>
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 opacity-90" id="main-payment-methods">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition Grid -->
+    <section class="py-12 sm:py-16 bg-darkbg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">WHY PLAYERS CHOOSE US</h2>
+                <p class="text-xs sm:text-sm text-gray-400 mt-2">Tailored for maximum entertainment, security, and local currency support.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-cardbg p-6 sm:p-8 rounded-2xl border border-gray-800 text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/30 text-gold-400 flex items-center justify-center text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Instant Payouts</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Direct transfers to your bank account or electronic wallet in under 15 minutes.</p>
+                </div>
+
+                <div class="bg-cardbg p-6 sm:p-8 rounded-2xl border border-gray-800 text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Licensed & Secure</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Fully audited RNG algorithms and strict player privacy protocols.</p>
+                </div>
+
+                <div class="bg-cardbg p-6 sm:p-8 rounded-2xl border border-gray-800 text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 text-gold-400 flex items-center justify-center text-2xl mx-auto mb-5">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Native Currency Play</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games Section -->
+    <section class="py-12 sm:py-16 bg-cardbg border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10">
+                <div>
+                    <span class="text-gold-400 text-xs font-bold uppercase tracking-wider">TOP TRENDING SLOTS</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">FEATURED CASINO GAMES</h2>
+                </div>
+                <div class="mt-2 md:mt-0 text-xs sm:text-sm text-gray-400">
+                    Average Return to Player (RTP): <span class="text-emerald-400 font-bold">97.8%</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
+                    <div class="relative overflow-hidden aspect-square">
+                        <img src="https://placehold.co/400x400/1a1a2e/EAB308?text=Gates+of+Olympus" alt="Gates of Olympus" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">HOT</span>
+                    </div>
+                    <div class="p-3 text-center">
+                        <h4 class="font-bold text-white text-xs sm:text-sm">Gates of Olympus</h4>
+                        <span class="text-[11px] text-gold-400">RTP: 96.5%</span>
+                    </div>
+                </div>
+
+                <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
+                    <div class="relative overflow-hidden aspect-square">
+                        <img src="https://placehold.co/400x400/2d132c/EAB308?text=Book+of+Dead" alt="Book of Dead" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">50 SPINS</span>
+                    </div>
+                    <div class="p-3 text-center">
+                        <h4 class="font-bold text-white text-xs sm:text-sm">Book of Dead</h4>
+                        <span class="text-[11px] text-gold-400">RTP: 96.2%</span>
+                    </div>
+                </div>
+
+                <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
+                    <div class="relative overflow-hidden aspect-square">
+                        <img src="https://placehold.co/400x400/0f3460/EAB308?text=Sweet+Bonanza" alt="Sweet Bonanza" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-3 text-center">
+                        <h4 class="font-bold text-white text-xs sm:text-sm">Sweet Bonanza</h4>
+                        <span class="text-[11px] text-gold-400">RTP: 96.6%</span>
+                    </div>
+                </div>
+
+                <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
+                    <div class="relative overflow-hidden aspect-square">
+                        <img src="https://placehold.co/400x400/16213e/EAB308?text=Sarmata+Gold" alt="Sarmata Gold" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">JACKPOT</span>
+                    </div>
+                    <div class="p-3 text-center">
+                        <h4 class="font-bold text-white text-xs sm:text-sm">Sarmata Gold Megaways</h4>
+                        <span class="text-[11px] text-gold-400">RTP: 97.1%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Disclaimer -->
+    <footer class="bg-black py-8 border-t border-gray-900 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 space-y-4 text-center sm:text-left">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 pb-4">
+                <div class="flex items-center space-x-2 mx-auto sm:mx-0">
+                    <span class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">18+</span>
+                    <span id="footer-compliance-head" class="font-semibold text-gray-400">Play Responsibly</span>
+                </div>
+                <div class="flex space-x-4 mx-auto sm:mx-0 text-gray-400">
+                    <a href="#" class="hover:text-white">Terms & Conditions</a>
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Responsible Gaming</a>
+                </div>
+            </div>
+            <p id="footer-compliance-body" class="text-[11px] leading-relaxed">
+                Gambling can be addictive. Please play responsibly. 18+ only.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA Bar -->
+    <div id="sticky-bottom-bar" class="fixed bottom-0 left-0 right-0 z-50 p-3 bg-darkbg/95 border-t border-gold-500/30 backdrop-blur-md md:hidden">
+        <div class="flex items-center justify-between gap-3 max-w-md mx-auto">
+            <div class="text-left">
+                <div class="text-[10px] text-gray-400 font-bold uppercase">WELCOME BONUS</div>
+                <div id="sticky-bonus-text" class="text-xs font-black text-white">150% BONUS + 50 SPINS</div>
+            </div>
+            <a href="#" class="btn-buy cta-btn-primary px-5 py-2.5 rounded-xl font-extrabold text-white text-xs uppercase tracking-wider shrink-0 flex items-center gap-1.5 shadow-lg claim-link">
+                <span class="cta-text">CLAIM NOW</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Multi-Country Localization Script Engine -->
+    <script>
+    const COUNTRY_CONFIGS = {
+        "DE": {
+            lang: "de",
+            flag: "🇩🇪",
+            license: "Offizieller Casino-Partner • Lizenziert & Sicher",
+            notice: "EXKLUSIV FÜR SPIELER AUS DEUTSCHLAND",
+            bonusVal: "1.000 €",
+            bonusSub: "+ 50 FREISPIELE + GLÜCKSRAD",
+            ctaText: "BONUS JETZT SICHERN",
+            currency: "EUR",
+            benefits: [
+                "<strong>Blitzschnelle Auszahlungen</strong> direkt auf Ihr Bankkonto",
+                "<strong>100% legal & sicher</strong> mit SSL-Verschlüsselung",
+                "Spielen Sie direkt in <strong>Euro (€)</strong> ohne Gebühren",
+                "Über <strong>3.000+ Slots</strong> & Live Casino Spiele"
+            ],
+            payments: ["BLIK", "Bank Transfer", "VISA", "Mastercard", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=de"
+        },
+        "CH": {
+            lang: "de",
+            flag: "🇨🇭",
+            license: "Exklusives Casino-Angebot für die Schweiz",
+            notice: "EXKLUSIV FÜR SPIELER IN DER SCHWEIZ",
+            bonusVal: "CHF 1'000",
+            bonusSub: "+ 50 FREISPIELE + GLÜCKSRAD",
+            ctaText: "JETZT ANMELDEN",
+            currency: "CHF",
+            benefits: [
+                "<strong>Auszahlungen in unter 15 Minuten</strong> auf Ihr Schweizer Konto",
+                "<strong>100% lizenziertes</strong> und sicheres Spielerlebnis",
+                "Direkt in <strong>Schweizer Franken (CHF)</strong> spielen",
+                "Zugang zu exklusiven VIP-Klassikern & Highroller-Slots"
+            ],
+            payments: ["TWINT", "PostFinance", "VISA", "Mastercard", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=ch"
+        },
+        "PL": {
+            lang: "pl",
+            flag: "🇵🇱",
+            license: "Oficjalny partner kasyna w Polsce • Licencjonowane i bezpieczne",
+            notice: "EKSKLUZYWNIE DLA GRACZY W POLSCE",
+            bonusVal: "5 000 PLN",
+            bonusSub: "+ 50 DARMOWYCH SPINÓW + KOŁO FORTUNY",
+            ctaText: "ODBIERZ BONUS TERAZ",
+            currency: "PLN",
+            benefits: [
+                "<strong>Błyskawiczna wypłata do 15 minut</strong> na polskie konto",
+                "<strong>100% legalnie</strong> i zgodnie z prawem hazardowym",
+                "Gra całkowicie bez prowizji w <strong>polskich złotych (PLN)</strong>",
+                "Ponad <strong>3 000+ topowych automatów</strong> & Kasyno na Żywo"
+            ],
+            payments: ["BLIK", "PKO Bank", "mBank", "VISA", "Mastercard"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=pl"
+        },
+        "CZ": {
+            lang: "cs",
+            flag: "🇨🇿",
+            license: "Oficiální kasino partner v ČR • Licencováno",
+            notice: "EXKLUZIVNĚ PRO HRÁČE Z ČESKÉ REPUBLIKY",
+            bonusVal: "25 000 Kč",
+            bonusSub: "+ 50 ZATOČENÍ ZDARMA + KOLO ŠTĚSTÍ",
+            ctaText: "ZÍSKAT BONUS TEĎ",
+            currency: "CZK",
+            benefits: [
+                "<strong>Rychlé výplaty do 15 minut</strong> přímo na český účet",
+                "<strong>100% bezpečné hra</strong> s platnou licencí",
+                "Hrajte přímo v <strong>českých korunách (Kč)</strong> bez poplatků",
+                "Více než <strong>3 000+ výherních automatů</strong>"
+            ],
+            payments: ["Bank Wire", "VISA", "Mastercard", "Apple Pay", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=cz"
+        },
+        "AU": {
+            lang: "en",
+            flag: "🇦🇺",
+            license: "Licensed Online Gaming Platform • Instant Payouts",
+            notice: "EXCLUSIVE OFFER FOR AUSTRALIAN PLAYERS",
+            bonusVal: "$1,500 AUD",
+            bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
+            ctaText: "CLAIM POKIES BONUS",
+            currency: "AUD",
+            benefits: [
+                "<strong>Instant withdrawals</strong> directly to your Australian bank",
+                "<strong>Certified RNG</strong> & high-paying online pokies",
+                "Play directly in <strong>Australian Dollars (AUD)</strong>",
+                "Over <strong>3,000+ pokies</strong> & live dealer tables"
+            ],
+            payments: ["PayID", "Neosurf", "VISA", "Mastercard", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=au"
+        },
+        "CA": {
+            lang: "en",
+            flag: "🇨🇦",
+            license: "Licensed Canadian Gaming Platform • Fast Payouts",
+            notice: "EXCLUSIVE OFFER FOR CANADIAN PLAYERS",
+            bonusVal: "$1,500 CAD",
+            bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
+            ctaText: "CLAIM BONUS NOW",
+            currency: "CAD",
+            benefits: [
+                "<strong>Instant Interac e-Transfer</strong> withdrawals",
+                "<strong>100% Fair Play certified</strong> online casino",
+                "Wager directly in <strong>Canadian Dollars (CAD)</strong>",
+                "Huge selection of <strong>3,000+ slots & live tables</strong>"
+            ],
+            payments: ["Interac", "iDebit", "VISA", "Mastercard", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=ca"
+        },
+        "DEFAULT": {
+            lang: "en",
+            flag: "🌐",
+            license: "Licensed & Regulated Global Gaming Platform",
+            notice: "EXCLUSIVE WELCOME BONUS UNLOCKED",
+            bonusVal: "1,000 EUR",
+            bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
+            ctaText: "CLAIM BONUS NOW",
+            currency: "EUR",
+            benefits: [
+                "<strong>Fast withdrawals</strong> in under 15 minutes",
+                "<strong>Safe & Encrypted</strong> 256-bit SSL connection",
+                "Play in your native currency with zero exchange fees",
+                "Over <strong>3,000+ premium slots</strong> & live tables"
+            ],
+            payments: ["VISA", "Mastercard", "Skrill", "Neteller", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=default"
+        }
+    };
+
+    function renderPage() {
+        // Detect Geo from Cloudflare Worker parameter or URL query fallback
+        const urlParams = new URLSearchParams(window.location.search);
+        const geoParam = urlParams.get('geo');
+        const detectedGeo = (window.USER_COUNTRY || geoParam || "DEFAULT").toUpperCase();
+        
+        const config = COUNTRY_CONFIGS[detectedGeo] || COUNTRY_CONFIGS["DEFAULT"];
+
+        // Update Text Elements
+        document.documentElement.lang = config.lang;
+        document.getElementById('geo-flag-icon').innerText = config.flag;
+        document.getElementById('geo-license-text').innerText = config.license;
+        document.getElementById('geo-pill-flag').innerText = config.flag;
+        document.getElementById('geo-pill-notice').innerText = config.notice;
+        document.getElementById('dynamic-bonus-amount').innerText = config.bonusVal;
+        document.getElementById('dynamic-bonus-sub').innerText = config.bonusSub;
+        document.getElementById('sticky-bonus-text').innerText = `${config.bonusVal} + 50 SPINS`;
+
+        // Update CTA Buttons
+        const ctaElements = document.getElementsByClassName('cta-text');
+        for (let el of ctaElements) {
+            el.innerText = config.ctaText;
+        }
+
+        const claimLinks = document.getElementsByClassName('claim-link');
+        for (let link of claimLinks) {
+            link.href = `${config.affiliateUrl}&curr=${config.currency}`;
+        }
+
+        // Render Key Benefits
+        const benefitsContainer = document.getElementById('dynamic-benefits');
+        benefitsContainer.innerHTML = config.benefits.map(b => `
+            <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-400 text-base shrink-0"></i>
+                <span>${b}</span>
+            </li>
+        `).join('');
+
+        // Render Payment Badges
+        const paymentContainer = document.getElementById('main-payment-methods');
+        paymentContainer.innerHTML = config.payments.map(p => `
+            <div class="bg-cardbg border border-gray-800 px-3 sm:px-5 py-2 rounded-xl flex items-center gap-2">
+                <i class="fa-solid fa-wallet text-gold-400 text-base sm:text-lg"></i>
+                <span class="font-bold text-xs sm:text-sm text-white">${p}</span>
+            </div>
+        `).join('');
+
+        // Render Live Winner Marquee
+        const marqueeContainer = document.getElementById('marquee-ticker');
+        const winnerNames = ["Tomasz S.", "Elena M.", "Marek B.", "Piotr K.", "Anna W."];
+        const winsHtml = winnerNames.map(n => `
+            <span><strong class="text-white">${n}</strong> &bull; <strong class="text-gold-400">12,500 ${config.currency}</strong> <span class="text-gray-400">(Gates of Olympus)</span></span>
+            <span class="text-gray-600 mx-4">&bull;</span>
+        `).join('');
+        marqueeContainer.innerHTML = `<div class="flex items-center space-x-4 pr-4">${winsHtml}${winsHtml}</div>`;
+
+        // Reveal page smoothly after DOM updates
+        document.body.classList.add('ready');
+    }
+
+    // Countdown Urgency Timer
+    function startTimer() {
+        let duration = 14 * 60 + 59;
+        const timerDisplay = document.getElementById('timer');
+        if(!timerDisplay) return;
+
+        setInterval(() => {
+            let minutes = Math.floor(duration / 60);
+            let seconds = duration % 60;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            timerDisplay.textContent = minutes + ":" + seconds;
+
+            if (--duration < 0) duration = 14 * 60 + 59;
+        }, 1000);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        renderPage();
+        startTimer();
+    });
+    </script>
+</body>
+</html>
