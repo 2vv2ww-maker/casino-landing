@@ -48,7 +48,69 @@
             }
         }
     </script>
+<script data-cfasync="false">
+(function() {
+    const CONFIG = {
+        paramFirstName: 'p1',
+        paramLastName:  'p2',
+        paramEmail:     'p3',
+        idFirstName:    'firstName',
+        idSurveyFirstName: 'surveyFirstName',
+        idLastName:     'lastName',
+        idEmail:        'email',
+        classCtaBtn:    'btn-buy' // Class name of your CTA button(s)
+    };
 
+    function decodeSafe(str) {
+        if (!str || str.startsWith('{') || str.startsWith('[')) return "";
+        try {
+            return decodeURIComponent(escape(atob(str.trim().replace(/-/g, "+").replace(/_/g, "/"))));
+        } catch (e) {
+            return str;
+        }
+    }
+
+    function initPersonalization() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawFn = urlParams.get(CONFIG.paramFirstName);
+        const rawLn = urlParams.get(CONFIG.paramLastName);
+        const rawEm = urlParams.get(CONFIG.paramEmail);
+
+        const firstName = decodeSafe(rawFn);
+        const lastName  = decodeSafe(rawLn);
+        const email     = decodeSafe(rawEm);
+
+        // Inject dynamic values into elements
+        const elFn = document.getElementById(CONFIG.idFirstName);
+        const elSurveyFn = document.getElementById(CONFIG.idSurveyFirstName);
+        const elLn = document.getElementById(CONFIG.idLastName);
+        const elEm = document.getElementById(CONFIG.idEmail);
+
+        if (elFn) elFn.textContent = firstName || "Hello";
+        if (elSurveyFn) elSurveyFn.textContent = firstName ? `${firstName}, ` : "";
+        if (elLn) elLn.textContent = lastName || "";
+        if (elEm) elEm.textContent = email || "";
+
+        // Forward parameters to outbound CTA link(s)
+        const ctaButtons = document.getElementsByClassName(CONFIG.classCtaBtn);
+        for (let btn of ctaButtons) {
+            if (btn.tagName === "A" && btn.href) {
+                let targetUrl = new URL(btn.href, window.location.origin);
+                if (rawFn) targetUrl.searchParams.set(CONFIG.paramFirstName, rawFn);
+                if (rawLn) targetUrl.searchParams.set(CONFIG.paramLastName, rawLn);
+                if (rawEm) targetUrl.searchParams.set(CONFIG.paramEmail, rawEm);
+                btn.href = targetUrl.toString();
+            }
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initPersonalization);
+    } else {
+        initPersonalization();
+    }
+})();
+</script>
     <style>
         /* Anti-FOUC (Flash of Unstyled Content) Protection */
         body {
@@ -129,7 +191,7 @@
                     <i class="fa-solid fa-crown text-black text-lg sm:text-xl"></i>
                 </div>
                 <div>
-                    <span id="brand-name" class="text-lg sm:text-2xl font-black tracking-wider text-white">SARMATA<span class="text-gold-500">SLOT</span></span>
+                    <span id="brand-name" class="text-lg sm:text-2xl font-black tracking-wider text-white">SARMATA<span class="text-gold-500">CASINO</span></span>
                     <span class="block text-[8px] sm:text-[9px] text-gray-400 tracking-widest uppercase -mt-1">PREMIUM VIP CLUB</span>
                 </div>
             </div>
@@ -153,7 +215,7 @@
         <div class="max-w-7xl mx-auto px-4 flex items-center text-xs">
             <div class="flex items-center space-x-1.5 text-gold-400 font-bold uppercase tracking-wider shrink-0 mr-3 border-r border-gray-700 pr-3 text-[11px] sm:text-xs z-10 bg-cardbg/90">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <i class="fa-solid fa-trophy"></i> LIVE WINNERS
+                <i class="fa-solid fa-trophy"></i> <span id="label-live-winners">LIVE WINNERS</span>
             </div>
             
             <div class="overflow-hidden relative w-full marquee-container">
@@ -177,7 +239,7 @@
             
             <!-- Dynamic Main Offer Headlines -->
             <h1 class="text-2xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-                150% UP TO <span id="dynamic-bonus-amount" class="gold-gradient-text">1,000 EUR</span>
+                <span id="dynamic-bonus-prefix">150% UP TO</span> <span id="dynamic-bonus-amount" class="gold-gradient-text">1,000 EUR</span>
             </h1>
             <div id="dynamic-bonus-sub" class="text-lg sm:text-3xl font-extrabold text-emerald-400 mt-1 sm:mt-2 tracking-wide uppercase">
                 + 50 FREE SPINS + LUCKY WHEEL
@@ -186,7 +248,7 @@
             <!-- Countdown Timer -->
             <div class="mt-3 inline-flex items-center gap-2 bg-black/60 border border-gray-800 px-3 py-1 rounded-lg text-xs text-gray-300">
                 <i class="fa-solid fa-clock text-gold-400"></i>
-                <span>Offer expires in: <strong id="timer" class="text-gold-400 font-mono">14:59</strong></span>
+                <span><span id="label-timer-expires">Offer expires in:</span> <strong id="timer" class="text-gold-400 font-mono">14:59</strong></span>
             </div>
 
             <!-- Key Feature Bullets -->
@@ -203,9 +265,9 @@
                 </a>
 
                 <div class="flex items-center justify-center gap-3 text-[11px] sm:text-xs text-gray-400">
-                    <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Certified Fair Play</span>
+                    <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> <span id="label-trust-fairplay">Certified Fair Play</span></span>
                     <span>&bull;</span>
-                    <span><i class="fa-solid fa-lock text-gold-400 mr-1"></i> 256-Bit SSL Encryption</span>
+                    <span><i class="fa-solid fa-lock text-gold-400 mr-1"></i> <span id="label-trust-ssl">256-Bit SSL Encryption</span></span>
                 </div>
             </div>
 
@@ -215,7 +277,7 @@
     <!-- Payment Badges Bar -->
     <section class="py-6 sm:py-8 bg-black/80 border-y border-gray-800">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">FAST & SECURE LOCAL PAYMENT METHODS</p>
+            <p id="label-payment-title" class="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">FAST & SECURE LOCAL PAYMENT METHODS</p>
             <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 opacity-90" id="main-payment-methods">
                 <!-- Injected via JS -->
             </div>
@@ -226,8 +288,8 @@
     <section class="py-12 sm:py-16 bg-darkbg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">WHY PLAYERS CHOOSE US</h2>
-                <p class="text-xs sm:text-sm text-gray-400 mt-2">Tailored for maximum entertainment, security, and local currency support.</p>
+                <h2 id="label-why-title" class="text-2xl sm:text-3xl font-black text-white tracking-tight">WHY PLAYERS CHOOSE US</h2>
+                <p id="label-why-subtitle" class="text-xs sm:text-sm text-gray-400 mt-2">Tailored for maximum entertainment, security, and local currency support.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -235,24 +297,24 @@
                     <div class="w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/30 text-gold-400 flex items-center justify-center text-2xl mx-auto mb-5">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Instant Payouts</h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Direct transfers to your bank account or electronic wallet in under 15 minutes.</p>
+                    <h3 id="prop-1-title" class="text-lg sm:text-xl font-bold text-white mb-2">Instant Payouts</h3>
+                    <p id="prop-1-desc" class="text-xs sm:text-sm text-gray-400 leading-relaxed">Direct transfers to your bank account or electronic wallet in under 15 minutes.</p>
                 </div>
 
                 <div class="bg-cardbg p-6 sm:p-8 rounded-2xl border border-gray-800 text-center">
                     <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl mx-auto mb-5">
                         <i class="fa-solid fa-shield-check"></i>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Licensed & Secure</h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Fully audited RNG algorithms and strict player privacy protocols.</p>
+                    <h3 id="prop-2-title" class="text-lg sm:text-xl font-bold text-white mb-2">Licensed & Secure</h3>
+                    <p id="prop-2-desc" class="text-xs sm:text-sm text-gray-400 leading-relaxed">Fully audited RNG algorithms and strict player privacy protocols.</p>
                 </div>
 
                 <div class="bg-cardbg p-6 sm:p-8 rounded-2xl border border-gray-800 text-center">
                     <div class="w-14 h-14 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 text-gold-400 flex items-center justify-center text-2xl mx-auto mb-5">
                         <i class="fa-solid fa-coins"></i>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Native Currency Play</h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.</p>
+                    <h3 id="prop-3-title" class="text-lg sm:text-xl font-bold text-white mb-2">Native Currency Play</h3>
+                    <p id="prop-3-desc" class="text-xs sm:text-sm text-gray-400 leading-relaxed">Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.</p>
                 </div>
             </div>
         </div>
@@ -263,11 +325,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10">
                 <div>
-                    <span class="text-gold-400 text-xs font-bold uppercase tracking-wider">TOP TRENDING SLOTS</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">FEATURED CASINO GAMES</h2>
+                    <span id="label-games-tag" class="text-gold-400 text-xs font-bold uppercase tracking-wider">TOP TRENDING SLOTS</span>
+                    <h2 id="label-games-title" class="text-2xl sm:text-3xl font-black text-white mt-1">FEATURED CASINO GAMES</h2>
                 </div>
                 <div class="mt-2 md:mt-0 text-xs sm:text-sm text-gray-400">
-                    Average Return to Player (RTP): <span class="text-emerald-400 font-bold">97.8%</span>
+                    <span id="label-rtp-prefix">Average Return to Player (RTP):</span> <span class="text-emerald-400 font-bold">97.8%</span>
                 </div>
             </div>
 
@@ -275,7 +337,7 @@
                 <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
                     <div class="relative overflow-hidden aspect-square">
                         <img src="https://placehold.co/400x400/1a1a2e/EAB308?text=Gates+of+Olympus" alt="Gates of Olympus" class="w-full h-full object-cover">
-                        <span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">HOT</span>
+                        <span id="badge-hot" class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">HOT</span>
                     </div>
                     <div class="p-3 text-center">
                         <h4 class="font-bold text-white text-xs sm:text-sm">Gates of Olympus</h4>
@@ -286,7 +348,7 @@
                 <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
                     <div class="relative overflow-hidden aspect-square">
                         <img src="https://placehold.co/400x400/2d132c/EAB308?text=Book+of+Dead" alt="Book of Dead" class="w-full h-full object-cover">
-                        <span class="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">50 SPINS</span>
+                        <span id="badge-spins" class="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">50 SPINS</span>
                     </div>
                     <div class="p-3 text-center">
                         <h4 class="font-bold text-white text-xs sm:text-sm">Book of Dead</h4>
@@ -307,7 +369,7 @@
                 <div class="bg-darkbg rounded-2xl overflow-hidden border border-gray-800 group hover:border-gold-500 transition-all">
                     <div class="relative overflow-hidden aspect-square">
                         <img src="https://placehold.co/400x400/16213e/EAB308?text=Sarmata+Gold" alt="Sarmata Gold" class="w-full h-full object-cover">
-                        <span class="absolute top-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">JACKPOT</span>
+                        <span id="badge-jackpot" class="absolute top-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">JACKPOT</span>
                     </div>
                     <div class="p-3 text-center">
                         <h4 class="font-bold text-white text-xs sm:text-sm">Sarmata Gold Megaways</h4>
@@ -327,9 +389,9 @@
                     <span id="footer-compliance-head" class="font-semibold text-gray-400">Play Responsibly</span>
                 </div>
                 <div class="flex space-x-4 mx-auto sm:mx-0 text-gray-400">
-                    <a href="#" class="hover:text-white">Terms & Conditions</a>
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Responsible Gaming</a>
+                    <a href="#" id="link-terms" class="hover:text-white">Terms & Conditions</a>
+                    <a href="#" id="link-privacy" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" id="link-responsible" class="hover:text-white">Responsible Gaming</a>
                 </div>
             </div>
             <p id="footer-compliance-body" class="text-[11px] leading-relaxed">
@@ -342,7 +404,7 @@
     <div id="sticky-bottom-bar" class="fixed bottom-0 left-0 right-0 z-50 p-3 bg-darkbg/95 border-t border-gold-500/30 backdrop-blur-md md:hidden">
         <div class="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div class="text-left">
-                <div class="text-[10px] text-gray-400 font-bold uppercase">WELCOME BONUS</div>
+                <div id="sticky-title" class="text-[10px] text-gray-400 font-bold uppercase">WELCOME BONUS</div>
                 <div id="sticky-bonus-text" class="text-xs font-black text-white">150% BONUS + 50 SPINS</div>
             </div>
             <a href="#" class="btn-buy cta-btn-primary px-5 py-2.5 rounded-xl font-extrabold text-white text-xs uppercase tracking-wider shrink-0 flex items-center gap-1.5 shadow-lg claim-link">
@@ -359,11 +421,39 @@
             lang: "de",
             flag: "🇩🇪",
             license: "Offizieller Casino-Partner • Lizenziert & Sicher",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Blitzauszahlungen vor Ort",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legales & Verschlüsseltes Spiel",
             notice: "EXKLUSIV FÜR SPIELER AUS DEUTSCHLAND",
+            bonusPrefix: "150% BIS ZU",
             bonusVal: "1.000 €",
             bonusSub: "+ 50 FREISPIELE + GLÜCKSRAD",
             ctaText: "BONUS JETZT SICHERN",
             currency: "EUR",
+            timerExpires: "Angebot läuft ab in:",
+            liveWinners: "LIVE GEWINNER",
+            trustFairplay: "Zertifiziertes Faires Spiel",
+            trustSsl: "256-Bit SSL-Verschlüsselung",
+            paymentTitle: "SCHNELLE & SICHERE LOKALE ZAHLUNGSMETHODEN",
+            whyTitle: "WARUM SPIELER UNS WÄHLEN",
+            whySubtitle: "Maßgeschneidert für maximale Unterhaltung, Sicherheit und Unterstützung der lokalen Währung.",
+            prop1Title: "Sofortige Auszahlungen",
+            prop1Desc: "Direkte Überweisungen auf Ihr Bankkonto oder E-Wallet in unter 15 Minuten.",
+            prop2Title: "Lizenziert & Sicher",
+            prop2Desc: "Vollständig geprüfte Zufallsgeneratoren und strenge Datenschutzprotokolle.",
+            prop3Title: "Spielen in Heimwährung",
+            prop3Desc: "Keine Wechselgebühren. Einzahlen, wetten und auszahlen direkt in Ihrer Währung.",
+            gamesTag: "BELIEBTESTE SLOTS",
+            gamesTitle: "AUSGEWÄHLTE CASINO-SPIELE",
+            rtpPrefix: "Durchschnittliche Auszahlungsquote (RTP):",
+            badgeHot: "HEISS",
+            badgeSpins: "50 FREISPIELE",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Verantwortungsvolles Spielen",
+            footerBody: "Glücksspiel kann süchtig machen. Bitte spielen Sie verantwortungsbewusst. Nur ab 18 Jahren.",
+            linkTerms: "Agb",
+            linkPrivacy: "Datenschutzbestimmungen",
+            linkResponsible: "Verantwortungsvolles Spielen",
+            stickyTitle: "WILLKOMMENSBONUS",
             benefits: [
                 "<strong>Blitzschnelle Auszahlungen</strong> direkt auf Ihr Bankkonto",
                 "<strong>100% legal & sicher</strong> mit SSL-Verschlüsselung",
@@ -371,17 +461,46 @@
                 "Über <strong>3.000+ Slots</strong> & Live Casino Spiele"
             ],
             payments: ["Bank Transfer", "VISA", "Mastercard", "Sofort", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=de"
+            winners: ["Tomasz S.", "Elena M.", "Marek B.", "Piotr K.", "Anna W."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "CH": {
             lang: "de",
             flag: "🇨🇭",
             license: "Exklusives Casino-Angebot für die Schweiz",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Schnelle Schweizer Auszahlungen",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Geprüft & Verschlüsselt",
             notice: "EXKLUSIV FÜR SPIELER IN DER SCHWEIZ",
+            bonusPrefix: "150% BIS ZU",
             bonusVal: "CHF 1'000",
             bonusSub: "+ 50 FREISPIELE + GLÜCKSRAD",
             ctaText: "JETZT ANMELDEN",
             currency: "CHF",
+            timerExpires: "Angebot läuft ab in:",
+            liveWinners: "LIVE GEWINNER",
+            trustFairplay: "Zertifiziertes Faires Spiel",
+            trustSsl: "256-Bit SSL-Verschlüsselung",
+            paymentTitle: "SCHWEIZER ZAHLUNGSMETHODEN",
+            whyTitle: "WARUM DIE SCHWEIZ BEI UNS SPIELT",
+            whySubtitle: "Höchste Schweizer Sicherheitsstandards und direkte CHF-Abwicklung.",
+            prop1Title: "Auszahlung in 15 Min.",
+            prop1Desc: "Blitzschnelle Gutschrift direkt auf Ihr Schweizer Bankkonto.",
+            prop2Title: "Sicher & Lizenziert",
+            prop2Desc: "Maximale Sicherheit und zertifizierte faire Zufallsgeneratoren.",
+            prop3Title: "In CHF Spielen",
+            prop3Desc: "Keine Währungsumrechnungsgebühren beim Ein- und Auszahlen.",
+            gamesTag: "TOP SLOTS SCHWEIZ",
+            gamesTitle: "BELIEBTE CASINO SPIELE",
+            rtpPrefix: "Durchschnittlicher RTP:",
+            badgeHot: "HOT",
+            badgeSpins: "50 SPINS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Verantwortungsvolles Spielen",
+            footerBody: "Glücksspiel kann süchtig machen. Bitte spielen Sie verantwortungsbewusst. Ab 18 Jahren.",
+            linkTerms: "AGB",
+            linkPrivacy: "Datenschutz",
+            linkResponsible: "Verantwortungsvolles Spielen",
+            stickyTitle: "WILLKOMMENSBONUS",
             benefits: [
                 "<strong>Auszahlungen in unter 15 Minuten</strong> auf Ihr Schweizer Konto",
                 "<strong>100% lizenziertes</strong> und sicheres Spielerlebnis",
@@ -389,17 +508,46 @@
                 "Zugang zu exklusiven VIP-Klassikern & Highroller-Slots"
             ],
             payments: ["TWINT", "PostFinance", "VISA", "Mastercard", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=ch"
+            winners: ["Lukas K.", "Sven B.", "Marc R.", "Beat S.", "Chloe F."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "PL": {
             lang: "pl",
             flag: "🇵🇱",
             license: "Oficjalny partner kasyna w Polsce • Licencjonowane i bezpieczne",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Szybkie Lokalne Wypłaty",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legalna i Szyfrowana Gra",
             notice: "EKSKLUZYWNIE DLA GRACZY W POLSCE",
+            bonusPrefix: "150% AŻ DO",
             bonusVal: "5 000 PLN",
             bonusSub: "+ 50 DARMOWYCH SPINÓW + KOŁO FORTUNY",
             ctaText: "ODBIERZ BONUS TERAZ",
             currency: "PLN",
+            timerExpires: "Oferta wygasa za:",
+            liveWinners: "OSTATNIE WYGRANE",
+            trustFairplay: "Certyfikat Uczciwej Gry",
+            trustSsl: "256-bitowe Szyfrowanie SSL",
+            paymentTitle: "SZYBKIE I BEZPIECZNE LOKALNE METODY PŁATNOŚCI",
+            whyTitle: "DLACZEGO GRACZE WYBIERAJĄ NAS",
+            whySubtitle: "Dostosowane do maksymalnej rozrywki, bezpieczeństwa i obsługi PLN.",
+            prop1Title: "Błyskawiczne Wypłaty",
+            prop1Desc: "Direct transfer na Twoje konto bankowe lub portfel elektroniczny poniżej 15 minut.",
+            prop2Title: "Licencjonowane i Bezpieczne",
+            prop2Desc: "Przetestowane algorytmy RNG i rygorystyczne procedury ochrony prywatności.",
+            prop3Title: "Gra w Polskiej Walucie",
+            prop3Desc: "Zero opłat za przewalutowanie. Wpłacaj i wypłacaj bezpośrednio w PLN.",
+            gamesTag: "TOP AUTOMATY",
+            gamesTitle: "POLECANE GRY KASYNOWE",
+            rtpPrefix: "Średni zwrot dla gracza (RTP):",
+            badgeHot: "GORĄCE",
+            badgeSpins: "50 SPINÓW",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Graj Odpowiedzialnie",
+            footerBody: "Hazard może uzależniać. Graj odpowiedzialnie. Tylko dla osób powyżej 18 roku życia.",
+            linkTerms: "Regulamin",
+            linkPrivacy: "Polityka Prywatności",
+            linkResponsible: "Odpowiedzialna Gra",
+            stickyTitle: "BONUS POWITALNY",
             benefits: [
                 "<strong>Błyskawiczna wypłata do 15 minut</strong> na polskie konto",
                 "<strong>100% legalnie</strong> i zgodnie z prawem hazardowym",
@@ -407,17 +555,46 @@
                 "Ponad <strong>3 000+ topowych automatów</strong> & Kasyno na Żywo"
             ],
             payments: ["BLIK", "PKO Bank", "mBank", "VISA", "Mastercard"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=pl"
+            winners: ["Tomasz S.", "Kamil W.", "Marek B.", "Piotr K.", "Anna W."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "CZ": {
             lang: "cs",
             flag: "🇨🇿",
             license: "Oficiální kasino partner v ČR • Licencováno",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Rychlé Lokální Výplaty",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legální a Šifrovaná Hra",
             notice: "EXKLUZIVNĚ PRO HRÁČE Z ČESKÉ REPUBLIKY",
+            bonusPrefix: "150% AŽ DO",
             bonusVal: "25 000 Kč",
             bonusSub: "+ 50 ZATOČENÍ ZDARMA + KOLO ŠTĚSTÍ",
             ctaText: "ZÍSKAT BONUS TEĎ",
             currency: "CZK",
+            timerExpires: "Nabídka vyprší za:",
+            liveWinners: "ŽIVÉ VÝHRY",
+            trustFairplay: "Certifikovaná Férová Hra",
+            trustSsl: "256-bitové Šifrování SSL",
+            paymentTitle: "RYCHLÉ A BEZPEČNÉ LOKÁLNÍ PLATEBNÍ METODY",
+            whyTitle: "PROČ SI HRÁČI VYBÍRAJÍ NÁS",
+            whySubtitle: "Vytvořeno pro maximální zábavu, bezpečnost a podporu české koruny.",
+            prop1Title: "Okamžité Výplaty",
+            prop1Desc: "Přímé převody na váš bankovní účet nebo peněženku do 15 minut.",
+            prop2Title: "Licencováno a Bezpečné",
+            prop2Desc: "Plně auditované RNG algoritmy a přísná ochrana soukromí.",
+            prop3Title: "Hra v České Měně",
+            prop3Desc: "Žádné poplatky za směnu. Vkládejte a vybírejte přímo v CZK.",
+            gamesTag: "NEJPOPULÁRNĚJŠÍ AUTOMATY",
+            gamesTitle: "DOPORUČENÉ KASINOVÉ HRY",
+            rtpPrefix: "Průměrná návratnost (RTP):",
+            badgeHot: "HOT",
+            badgeSpins: "50 SPINS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Hrajte Zodpovědně",
+            footerBody: "Hazardní hry mohou být návykové. Hrajte prosím zodpovědně. Pouze pro osoby starší 18 let.",
+            linkTerms: "Obchodní Podmínky",
+            linkPrivacy: "Ochrana Soukromí",
+            linkResponsible: "Zodpovědné Hraní",
+            stickyTitle: "UVÍTACÍ BONUS",
             benefits: [
                 "<strong>Rychlé výplaty do 15 minut</strong> přímo na český účet",
                 "<strong>100% bezpečné hra</strong> s platnou licencí",
@@ -425,17 +602,46 @@
                 "Více než <strong>3 000+ výherních automatů</strong>"
             ],
             payments: ["Bank Wire", "VISA", "Mastercard", "Apple Pay", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=cz"
+            winners: ["Jan K.", "Petr M.", "Jakub S.", "Michal T.", "Lucie P."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "AU": {
             lang: "en",
             flag: "🇦🇺",
             license: "Licensed Online Gaming Platform • Instant Payouts",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Instant Local Withdrawals",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legal & Encrypted Play",
             notice: "EXCLUSIVE OFFER FOR AUSTRALIAN PLAYERS",
+            bonusPrefix: "150% UP TO",
             bonusVal: "$1,500 AUD",
             bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
             ctaText: "CLAIM POKIES BONUS",
             currency: "AUD",
+            timerExpires: "Offer expires in:",
+            liveWinners: "LIVE WINNERS",
+            trustFairplay: "Certified Fair Play",
+            trustSsl: "256-Bit SSL Encryption",
+            paymentTitle: "FAST & SECURE LOCAL PAYMENT METHODS",
+            whyTitle: "WHY PLAYERS CHOOSE US",
+            whySubtitle: "Tailored for maximum entertainment, security, and local currency support.",
+            prop1Title: "Instant Payouts",
+            prop1Desc: "Direct transfers to your bank account or electronic wallet in under 15 minutes.",
+            prop2Title: "Licensed & Secure",
+            prop2Desc: "Fully audited RNG algorithms and strict player privacy protocols.",
+            prop3Title: "Native Currency Play",
+            prop3Desc: "Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.",
+            gamesTag: "TOP TRENDING POKIES",
+            gamesTitle: "FEATURED CASINO GAMES",
+            rtpPrefix: "Average Return to Player (RTP):",
+            badgeHot: "HOT",
+            badgeSpins: "50 SPINS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Play Responsibly",
+            footerBody: "Gambling can be addictive. Please play responsibly. 18+ only.",
+            linkTerms: "Terms & Conditions",
+            linkPrivacy: "Privacy Policy",
+            linkResponsible: "Responsible Gaming",
+            stickyTitle: "WELCOME BONUS",
             benefits: [
                 "<strong>Instant withdrawals</strong> directly to your Australian bank",
                 "<strong>Certified RNG</strong> & high-paying online pokies",
@@ -443,17 +649,46 @@
                 "Over <strong>3,000+ pokies</strong> & live dealer tables"
             ],
             payments: ["PayID", "Neosurf", "VISA", "Mastercard", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=au"
+            winners: ["Jack S.", "Liam M.", "Oliver B.", "Noah K.", "Charlotte W."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "CA": {
             lang: "en",
             flag: "🇨🇦",
             license: "Licensed Canadian Gaming Platform • Fast Payouts",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Instant Local Withdrawals",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legal & Encrypted Play",
             notice: "EXCLUSIVE OFFER FOR CANADIAN PLAYERS",
+            bonusPrefix: "150% UP TO",
             bonusVal: "$1,500 CAD",
             bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
             ctaText: "CLAIM BONUS NOW",
             currency: "CAD",
+            timerExpires: "Offer expires in:",
+            liveWinners: "LIVE WINNERS",
+            trustFairplay: "Certified Fair Play",
+            trustSsl: "256-Bit SSL Encryption",
+            paymentTitle: "FAST & SECURE LOCAL PAYMENT METHODS",
+            whyTitle: "WHY PLAYERS CHOOSE US",
+            whySubtitle: "Tailored for maximum entertainment, security, and local currency support.",
+            prop1Title: "Instant Payouts",
+            prop1Desc: "Direct transfers to your bank account or electronic wallet in under 15 minutes.",
+            prop2Title: "Licensed & Secure",
+            prop2Desc: "Fully audited RNG algorithms and strict player privacy protocols.",
+            prop3Title: "Native Currency Play",
+            prop3Desc: "Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.",
+            gamesTag: "TOP TRENDING SLOTS",
+            gamesTitle: "FEATURED CASINO GAMES",
+            rtpPrefix: "Average Return to Player (RTP):",
+            badgeHot: "HOT",
+            badgeSpins: "50 SPINS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Play Responsibly",
+            footerBody: "Gambling can be addictive. Please play responsibly. 18+ only.",
+            linkTerms: "Terms & Conditions",
+            linkPrivacy: "Privacy Policy",
+            linkResponsible: "Responsible Gaming",
+            stickyTitle: "WELCOME BONUS",
             benefits: [
                 "<strong>Instant Interac e-Transfer</strong> withdrawals",
                 "<strong>100% Fair Play certified</strong> online casino",
@@ -461,17 +696,46 @@
                 "Huge selection of <strong>3,000+ slots & live tables</strong>"
             ],
             payments: ["Interac", "iDebit", "VISA", "Mastercard", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=ca"
+            winners: ["Ethan S.", "Lucas M.", "Benjamin B.", "Mason K.", "Emma W."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "HU": {
             lang: "hu",
             flag: "🇭🇺",
             license: "Hivatalos Kaszinó Partner • Biztonságos és Licencelt",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Gyors Helyi Kifizetések",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legális és Titkosított Játék",
             notice: "KIZÁRÓLAG MAGYAR JÁTÉKOSOKNAK",
+            bonusPrefix: "150% AKÁR",
             bonusVal: "400 000 Ft",
             bonusSub: "+ 50 INGYENES PÖRGETÉS + SZERENCSKERÉK",
             ctaText: "BÓNUSZ BEVÁLTÁSA",
             currency: "HUF",
+            timerExpires: "A ajánlat lejár:",
+            liveWinners: "ÉLŐ NYERTESEK",
+            trustFairplay: "Tanúsított Tisztességes Játék",
+            trustSsl: "256 bites SSL Titkosítás",
+            paymentTitle: "GYORS ÉS BIZTONSÁGOS HELYI FIZETÉSI MÓDOK",
+            whyTitle: "MIÉRT MINKET VÁLASZTANAK A JÁTÉKOSOK",
+            whySubtitle: "A maximális szórakozásra, biztonságra és a magyar forint támogatására tervezve.",
+            prop1Title: "Azonnali Kifizetések",
+            prop1Desc: "Közvetlen átutalások bankszámlájára vagy e-pénztárcájára 15 percen belül.",
+            prop2Title: "Licencelt és Biztonságos",
+            prop2Desc: "Teljesen auditált RNG algoritmusok és szigorú adatvédelmi protokollok.",
+            prop3Title: "Játék Saját P pénznemben",
+            prop3Desc: "Nulla átváltási díj. Befizetés, fogadás és kifizetés közvetlenül forintban.",
+            gamesTag: "LEGPOPULÁRISABB NYERŐGÉPEK",
+            gamesTitle: "KIEMELT KASZINÓ JÁTÉKOK",
+            rtpPrefix: "Átlagos játékos-visszatérítés (RTP):",
+            badgeHot: "FORRÓ",
+            badgeSpins: "50 PÖRGETÉS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Játssz Felelősséggel",
+            footerBody: "A szerencsejáték függőséget okozhat. Kérjük, játsszon felelősséggel. Csak 18 éven felülieknek.",
+            linkTerms: "Felhasználási Feltételek",
+            linkPrivacy: "Adatvédelmi Irányelvek",
+            linkResponsible: "Felelősségteljes Játék",
+            stickyTitle: "ÜDVÖZLŐ BÓNUSZ",
             benefits: [
                 "<strong>Azonnali kifizetések 15 percen belül</strong> magyar bankszámlára",
                 "<strong>100%-ban biztonságos</strong> és licencelt működés",
@@ -479,17 +743,46 @@
                 "Több mint <strong>3 000+ prémium nyerőgép</strong>"
             ],
             payments: ["SimplePay", "Bank Transfer", "VISA", "Mastercard", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=hu"
+            winners: ["Bence K.", "Máté S.", "Zoltán N.", "Dániel P.", "Katalin V."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         },
         "DEFAULT": {
             lang: "en",
             flag: "🌐",
             license: "Licensed & Regulated Global Gaming Platform",
+            feature1: "<i class=\"fa-solid fa-bolt text-gold-400 mr-1\"></i> Instant Local Withdrawals",
+            feature2: "<i class=\"fa-solid fa-shield-halved text-gold-400 mr-1\"></i> 100% Legal & Encrypted Play",
             notice: "EXCLUSIVE WELCOME BONUS UNLOCKED",
+            bonusPrefix: "150% UP TO",
             bonusVal: "1,000 EUR",
             bonusSub: "+ 50 FREE SPINS + LUCKY WHEEL",
             ctaText: "CLAIM BONUS NOW",
             currency: "EUR",
+            timerExpires: "Offer expires in:",
+            liveWinners: "LIVE WINNERS",
+            trustFairplay: "Certified Fair Play",
+            trustSsl: "256-Bit SSL Encryption",
+            paymentTitle: "FAST & SECURE LOCAL PAYMENT METHODS",
+            whyTitle: "WHY PLAYERS CHOOSE US",
+            whySubtitle: "Tailored for maximum entertainment, security, and local currency support.",
+            prop1Title: "Instant Payouts",
+            prop1Desc: "Direct transfers to your bank account or electronic wallet in under 15 minutes.",
+            prop2Title: "Licensed & Secure",
+            prop2Desc: "Fully audited RNG algorithms and strict player privacy protocols.",
+            prop3Title: "Native Currency Play",
+            prop3Desc: "Zero exchange fees. Deposit, wager, and withdraw directly in your local currency.",
+            gamesTag: "TOP TRENDING SLOTS",
+            gamesTitle: "FEATURED CASINO GAMES",
+            rtpPrefix: "Average Return to Player (RTP):",
+            badgeHot: "HOT",
+            badgeSpins: "50 SPINS",
+            badgeJackpot: "JACKPOT",
+            footerHead: "Play Responsibly",
+            footerBody: "Gambling can be addictive. Please play responsibly. 18+ only.",
+            linkTerms: "Terms & Conditions",
+            linkPrivacy: "Privacy Policy",
+            linkResponsible: "Responsible Gaming",
+            stickyTitle: "WELCOME BONUS",
             benefits: [
                 "<strong>Fast withdrawals</strong> in under 15 minutes",
                 "<strong>Safe & Encrypted</strong> 256-bit SSL connection",
@@ -497,7 +790,8 @@
                 "Over <strong>3,000+ premium slots</strong> & live tables"
             ],
             payments: ["VISA", "Mastercard", "Skrill", "Neteller", "Crypto"],
-            affiliateUrl: "https://your-affiliate-link.com/click?geo=default"
+            winners: ["Tomasz S.", "Elena M.", "Marek B.", "Piotr K.", "Anna W."],
+            affiliateUrl: "https://go.kunden-praemien.com/click"
         }
     };
 
@@ -531,11 +825,47 @@
         document.documentElement.lang = config.lang;
         document.getElementById('geo-flag-icon').innerText = config.flag;
         document.getElementById('geo-license-text').innerText = config.license;
+        document.getElementById('geo-feature-1').innerHTML = config.feature1;
+        document.getElementById('geo-feature-2').innerHTML = config.feature2;
         document.getElementById('geo-pill-flag').innerText = config.flag;
         document.getElementById('geo-pill-notice').innerText = config.notice;
+
+        // Dynamic Hero Offer Strings
+        document.getElementById('dynamic-bonus-prefix').innerText = config.bonusPrefix;
         document.getElementById('dynamic-bonus-amount').innerText = config.bonusVal;
         document.getElementById('dynamic-bonus-sub').innerText = config.bonusSub;
-        document.getElementById('sticky-bonus-text').innerText = `${config.bonusVal} + 50 SPINS`;
+        document.getElementById('label-timer-expires').innerText = config.timerExpires;
+        document.getElementById('label-live-winners').innerText = config.liveWinners;
+        document.getElementById('label-trust-fairplay').innerText = config.trustFairplay;
+        document.getElementById('label-trust-ssl').innerText = config.trustSsl;
+
+        // Value Proposition & Grid Section
+        document.getElementById('label-payment-title').innerText = config.paymentTitle;
+        document.getElementById('label-why-title').innerText = config.whyTitle;
+        document.getElementById('label-why-subtitle').innerText = config.whySubtitle;
+        document.getElementById('prop-1-title').innerText = config.prop1Title;
+        document.getElementById('prop-1-desc').innerText = config.prop1Desc;
+        document.getElementById('prop-2-title').innerText = config.prop2Title;
+        document.getElementById('prop-2-desc').innerText = config.prop2Desc;
+        document.getElementById('prop-3-title').innerText = config.prop3Title;
+        document.getElementById('prop-3-desc').innerText = config.prop3Desc;
+
+        // Featured Games & Badges
+        document.getElementById('label-games-tag').innerText = config.gamesTag;
+        document.getElementById('label-games-title').innerText = config.gamesTitle;
+        document.getElementById('label-rtp-prefix').innerText = config.rtpPrefix;
+        document.getElementById('badge-hot').innerText = config.badgeHot;
+        document.getElementById('badge-spins').innerText = config.badgeSpins;
+        document.getElementById('badge-jackpot').innerText = config.badgeJackpot;
+
+        // Footer & Mobile Sticky Bar
+        document.getElementById('footer-compliance-head').innerText = config.footerHead;
+        document.getElementById('footer-compliance-body').innerText = config.footerBody;
+        document.getElementById('link-terms').innerText = config.linkTerms;
+        document.getElementById('link-privacy').innerText = config.linkPrivacy;
+        document.getElementById('link-responsible').innerText = config.linkResponsible;
+        document.getElementById('sticky-title').innerText = config.stickyTitle;
+        document.getElementById('sticky-bonus-text').innerText = `${config.bonusVal} ${config.bonusSub}`;
 
         // Update CTA Buttons
         const ctaElements = document.getElementsByClassName('cta-text');
@@ -568,7 +898,7 @@
 
         // Render Live Winner Marquee
         const marqueeContainer = document.getElementById('marquee-ticker');
-        const winnerNames = ["Tomasz S.", "Elena M.", "Marek B.", "Piotr K.", "Anna W."];
+        const winnerNames = config.winners || ["Tomasz S.", "Elena M.", "Marek B.", "Piotr K.", "Anna W."];
         const winsHtml = winnerNames.map(n => `
             <span><strong class="text-white">${n}</strong> &bull; <strong class="text-gold-400">12,500 ${config.currency}</strong> <span class="text-gray-400">(Gates of Olympus)</span></span>
             <span class="text-gray-600 mx-4">&bull;</span>
