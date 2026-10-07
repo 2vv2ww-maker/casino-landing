@@ -50,7 +50,7 @@
     </script>
 
     <style>
-        /* Prevent FOUC (Flash of Unstyled Content) during country rendering */
+        /* Anti-FOUC (Flash of Unstyled Content) Protection */
         body {
             background-color: #080a0f;
             color: #f3f4f6;
@@ -370,7 +370,7 @@
                 "Spielen Sie direkt in <strong>Euro (€)</strong> ohne Gebühren",
                 "Über <strong>3.000+ Slots</strong> & Live Casino Spiele"
             ],
-            payments: ["BLIK", "Bank Transfer", "VISA", "Mastercard", "Crypto"],
+            payments: ["Bank Transfer", "VISA", "Mastercard", "Sofort", "Crypto"],
             affiliateUrl: "https://your-affiliate-link.com/click?geo=de"
         },
         "CH": {
@@ -463,6 +463,24 @@
             payments: ["Interac", "iDebit", "VISA", "Mastercard", "Crypto"],
             affiliateUrl: "https://your-affiliate-link.com/click?geo=ca"
         },
+        "HU": {
+            lang: "hu",
+            flag: "🇭🇺",
+            license: "Hivatalos Kaszinó Partner • Biztonságos és Licencelt",
+            notice: "KIZÁRÓLAG MAGYAR JÁTÉKOSOKNAK",
+            bonusVal: "400 000 Ft",
+            bonusSub: "+ 50 INGYENES PÖRGETÉS + SZERENCSKERÉK",
+            ctaText: "BÓNUSZ BEVÁLTÁSA",
+            currency: "HUF",
+            benefits: [
+                "<strong>Azonnali kifizetések 15 percen belül</strong> magyar bankszámlára",
+                "<strong>100%-ban biztonságos</strong> és licencelt működés",
+                "Játsszon közvetlenül <strong>magyar forintban (HUF)</strong> átváltási díj nélkül",
+                "Több mint <strong>3 000+ prémium nyerőgép</strong>"
+            ],
+            payments: ["SimplePay", "Bank Transfer", "VISA", "Mastercard", "Crypto"],
+            affiliateUrl: "https://your-affiliate-link.com/click?geo=hu"
+        },
         "DEFAULT": {
             lang: "en",
             flag: "🌐",
@@ -483,15 +501,33 @@
         }
     };
 
-    function renderPage() {
-        // Detect Geo from Cloudflare Worker parameter or URL query fallback
+    // Client-side Geo Detection using Cloudflare's /cdn-cgi/trace endpoint
+    async function getVisitorCountry() {
+        // 1. Check URL query override first (e.g., winner-status.info/?geo=de)
         const urlParams = new URLSearchParams(window.location.search);
-        const geoParam = urlParams.get('geo');
-        const detectedGeo = (window.USER_COUNTRY || geoParam || "DEFAULT").toUpperCase();
-        
+        if (urlParams.get('geo')) {
+            return urlParams.get('geo').toUpperCase();
+        }
+
+        // 2. Fetch edge country directly from Cloudflare Pages trace endpoint
+        try {
+            const res = await fetch('/cdn-cgi/trace');
+            const text = await res.text();
+            const locLine = text.split('\n').find(line => line.startsWith('loc='));
+            if (locLine) {
+                return locLine.split('=')[1].toUpperCase();
+            }
+        } catch (e) {
+            console.warn("Cloudflare trace geo detection failed, using fallback:", e);
+        }
+
+        return "DEFAULT";
+    }
+
+    function renderPage(detectedGeo) {
         const config = COUNTRY_CONFIGS[detectedGeo] || COUNTRY_CONFIGS["DEFAULT"];
 
-        // Update Text Elements
+        // Update HTML Language & Metadata
         document.documentElement.lang = config.lang;
         document.getElementById('geo-flag-icon').innerText = config.flag;
         document.getElementById('geo-license-text').innerText = config.license;
@@ -539,7 +575,7 @@
         `).join('');
         marqueeContainer.innerHTML = `<div class="flex items-center space-x-4 pr-4">${winsHtml}${winsHtml}</div>`;
 
-        // Reveal page smoothly after DOM updates
+        // Reveal body content smoothly
         document.body.classList.add('ready');
     }
 
@@ -560,8 +596,10 @@
         }, 1000);
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        renderPage();
+    // Entry Point Execution
+    document.addEventListener("DOMContentLoaded", async () => {
+        const visitorCountry = await getVisitorCountry();
+        renderPage(visitorCountry);
         startTimer();
     });
     </script>
