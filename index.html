@@ -875,7 +875,7 @@
 
         const claimLinks = document.getElementsByClassName('claim-link');
         for (let link of claimLinks) {
-            link.href = `${config.affiliateUrl}&curr=${config.currency}`;
+            const separator = config.affiliateUrl.includes('?') ? '&' : '?'; link.href = `${config.affiliateUrl}${separator}curr=${config.currency}`;
         }
 
         // Render Key Benefits
