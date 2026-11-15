@@ -1318,8 +1318,299 @@
         return "DEFAULT";
     }
 
+    // Localized promotional copy follows each country configured page language.
+    const LOCALIZED_OFFERS = {
+        "en": [
+                "SLOTS WELCOME",
+                "PACKAGE",
+                "WAGERLESS WINS • 600% BONUS + 250 FREE SPINS",
+                "SLOTS WELCOME PACKAGE",
+                [
+                        "<strong>WAGERLESS CASH WINS</strong> — no wagering or playthrough requirement on eligible cash winnings",
+                        "<strong>BIG WIN? KEEP MORE OF IT</strong> — eligible winnings are yours without wagering requirements",
+                        "<strong>600% WELCOME BONUS</strong> + <strong>250 FREE SPINS</strong>",
+                        "<strong>10% DAILY CASHBACK</strong> — credited the next day",
+                        "<strong>PAID DAILY AT 12:00 PM UTC</strong>"
+                ]
+        ],
+        "de": [
+                "SLOT-WILLKOMMEN",
+                "PAKET",
+                "GEWINNE OHNE UMSETZUNG • 600% BONUS + 250 FREISPIELE",
+                "SLOT-WILLKOMMENSPAKET",
+                [
+                        "<strong>GELDGEWINNE OHNE UMSETZUNG</strong> — keine Umsatz- oder Durchspielanforderung für qualifizierte Echtgeldgewinne",
+                        "<strong>GROSS GEWONNEN? DU DARFST DEINEN GEWINN BEHALTEN</strong> — qualifizierte Gewinne ohne Umsatzvorgaben",
+                        "<strong>600% WILLKOMMENSBONUS</strong> + <strong>250 FREISPIELE</strong>",
+                        "<strong>10% TÄGLICHES CASHBACK</strong> — Gutschrift am Folgetag",
+                        "<strong>TÄGLICHE AUSZAHLUNG UM 12:00 UHR UTC</strong>"
+                ]
+        ],
+        "nl": [
+                "SLOT-WELKOMST",
+                "PAKKET",
+                "WINST ZONDER INZETVEREISTE • 600% BONUS + 250 GRATIS SPINS",
+                "SLOT-WELKOMSTPAKKET",
+                [
+                        "<strong>GELDWINSTEN ZONDER INZETVEREISTE</strong> — geen inzet- of doorspeelvereiste voor in aanmerking komende geldwinsten",
+                        "<strong>GROOT GEWONNEN? JE MAG JE WINST HOUDEN</strong> — geen inzetvereisten op kwalificerende winsten",
+                        "<strong>600% WELKOMSTBONUS</strong> + <strong>250 GRATIS SPINS</strong>",
+                        "<strong>10% DAGELIJKSE CASHBACK</strong> — de volgende dag bijgeschreven",
+                        "<strong>DAGELIJKSE UITBETALING OM 12:00 UTC</strong>"
+                ]
+        ],
+        "fr": [
+                "OFFRE DE BIENVENUE SLOTS",
+                "PACK",
+                "GAINS SANS EXIGENCE DE MISE • BONUS DE 600% + 250 TOURS GRATUITS",
+                "PACK DE BIENVENUE SLOTS",
+                [
+                        "<strong>GAINS EN ARGENT SANS EXIGENCE DE MISE</strong> — aucune condition de mise ou de rejouement sur les gains éligibles",
+                        "<strong>GROS GAIN ? CONSERVEZ VOS GAINS ÉLIGIBLES</strong> — sans exigence de mise",
+                        "<strong>BONUS DE BIENVENUE DE 600%</strong> + <strong>250 TOURS GRATUITS</strong>",
+                        "<strong>10% DE CASHBACK QUOTIDIEN</strong> — crédité le lendemain",
+                        "<strong>VERSEMENT QUOTIDIEN À 12:00 UTC</strong>"
+                ]
+        ],
+        "es": [
+                "BIENVENIDA DE SLOTS",
+                "PAQUETE",
+                "GANANCIAS SIN REQUISITO DE APUESTA • 600% DE BONO + 250 GIROS GRATIS",
+                "PAQUETE DE BIENVENIDA DE SLOTS",
+                [
+                        "<strong>GANANCIAS EN EFECTIVO SIN REQUISITO DE APUESTA</strong> — sin requisitos de apuesta ni de juego adicional para las ganancias elegibles",
+                        "<strong>¿GANASTE A LO GRANDE? CONSERVA TUS GANANCIAS ELEGIBLES</strong> — sin requisitos de apuesta",
+                        "<strong>600% DE BONO DE BIENVENIDA</strong> + <strong>250 GIROS GRATIS</strong>",
+                        "<strong>10% DE CASHBACK DIARIO</strong> — acreditado al día siguiente",
+                        "<strong>PAGO DIARIO A LAS 12:00 UTC</strong>"
+                ]
+        ],
+        "pt": [
+                "BOAS-VINDAS SLOTS",
+                "PACOTE",
+                "GANHOS SEM REQUISITO DE APOSTA • BÓNUS DE 600% + 250 RODADAS GRÁTIS",
+                "PACOTE DE BOAS-VINDAS SLOTS",
+                [
+                        "<strong>GANHOS EM DINHEIRO SEM REQUISITO DE APOSTA</strong> — sem exigência de aposta ou de jogo adicional nos ganhos elegíveis",
+                        "<strong>GANHOU EM GRANDE? FIQUE COM OS SEUS GANHOS ELEGÍVEIS</strong> — sem requisitos de aposta",
+                        "<strong>BÓNUS DE BOAS-VINDAS DE 600%</strong> + <strong>250 RODADAS GRÁTIS</strong>",
+                        "<strong>10% DE CASHBACK DIÁRIO</strong> — creditado no dia seguinte",
+                        "<strong>PAGAMENTO DIÁRIO ÀS 12:00 UTC</strong>"
+                ]
+        ],
+        "it": [
+                "BENVENUTO SLOTS",
+                "PACCHETTO",
+                "VINCITE SENZA REQUISITI DI GIOCATA • BONUS 600% + 250 GIRI GRATIS",
+                "PACCHETTO BENVENUTO SLOTS",
+                [
+                        "<strong>VINCITE IN DENARO SENZA REQUISITI DI GIOCATA</strong> — nessun requisito di puntata o rigiocata sulle vincite idonee",
+                        "<strong>HAI VINTO ALLA GRANDE? TIENI LE TUE VINCITE IDONEE</strong> — senza requisiti di giocata",
+                        "<strong>BONUS DI BENVENUTO DEL 600%</strong> + <strong>250 GIRI GRATIS</strong>",
+                        "<strong>10% DI CASHBACK GIORNALIERO</strong> — accreditato il giorno successivo",
+                        "<strong>ACCREDITO GIORNALIERO ALLE 12:00 UTC</strong>"
+                ]
+        ],
+        "bg": [
+                "SLOT ПРИВЕТСТВИЕ",
+                "ПАКЕТ",
+                "ПЕЧАЛБИ БЕЗ ИЗИСКВАНЕ ЗА ЗАЛАГАНЕ • 600% БОНУС + 250 БЕЗПЛАТНИ ЗАВЪРТАНИЯ",
+                "ПАКЕТ ЗА ДОБРЕ ДОШЛИ",
+                [
+                        "<strong>ПАРИЧНИ ПЕЧАЛБИ БЕЗ ИЗИСКВАНЕ ЗА ЗАЛАГАНЕ</strong> — без изискване за превъртане на допустимите печалби",
+                        "<strong>ГОЛЯМА ПЕЧАЛБА? ЗАПАЗЕТЕ Я</strong> — без изисквания за залагане върху допустимите печалби",
+                        "<strong>600% БОНУС ЗА ДОБРЕ ДОШЛИ</strong> + <strong>250 БЕЗПЛАТНИ ЗАВЪРТАНИЯ</strong>",
+                        "<strong>10% ЕЖЕДНЕВЕН КЕШБЕК</strong> — начислява се на следващия ден",
+                        "<strong>ЕЖЕДНЕВНО ИЗПЛАЩАНЕ В 12:00 UTC</strong>"
+                ]
+        ],
+        "hr": [
+                "SLOT DOBRODOŠLICA",
+                "PAKET",
+                "DOBICI BEZ UVJETA OBRTA • 600% BONUSA + 250 BESPLATNIH OKRETAJA",
+                "SLOT PAKET DOBRODOŠLICE",
+                [
+                        "<strong>NOVČANI DOBICI BEZ UVJETA OBRTA</strong> — bez zahtjeva za odigravanjem za prihvatljive novčane dobitke",
+                        "<strong>VELIKI DOBITAK? ZADRŽITE GA</strong> — bez uvjeta obrta za prihvatljive dobitke",
+                        "<strong>600% BONUS DOBRODOŠLICE</strong> + <strong>250 BESPLATNIH OKRETAJA</strong>",
+                        "<strong>10% DNEVNOG CASHBACKA</strong> — pripisuje se sljedeći dan",
+                        "<strong>DNEVNA ISPLATA U 12:00 UTC</strong>"
+                ]
+        ],
+        "el": [
+                "ΚΑΛΩΣΟΡΙΣΜΑ SLOTS",
+                "ΠΑΚΕΤΟ",
+                "ΚΕΡΔΗ ΧΩΡΙΣ ΑΠΑΙΤΗΣΗ ΠΟΝΤΑΡΙΣΜΑΤΟΣ • ΜΠΟΝΟΥΣ 600% + 250 ΔΩΡΕΑΝ ΠΕΡΙΣΤΡΟΦΕΣ",
+                "ΠΑΚΕΤΟ ΚΑΛΩΣΟΡΙΣΜΑΤΟΣ SLOTS",
+                [
+                        "<strong>ΧΡΗΜΑΤΙΚΑ ΚΕΡΔΗ ΧΩΡΙΣ ΑΠΑΙΤΗΣΗ ΠΟΝΤΑΡΙΣΜΑΤΟΣ</strong> — χωρίς απαίτηση στοιχηματισμού για τα επιλέξιμα κέρδη",
+                        "<strong>ΜΕΓΑΛΟ ΚΕΡΔΟΣ; ΚΡΑΤΗΣΤΕ ΤΟ</strong> — χωρίς απαιτήσεις πονταρίσματος για τα επιλέξιμα κέρδη",
+                        "<strong>ΜΠΟΝΟΥΣ ΚΑΛΩΣΟΡΙΣΜΑΤΟΣ 600%</strong> + <strong>250 ΔΩΡΕΑΝ ΠΕΡΙΣΤΡΟΦΕΣ</strong>",
+                        "<strong>10% ΗΜΕΡΗΣΙΟ CASHBACK</strong> — πιστώνεται την επόμενη ημέρα",
+                        "<strong>ΗΜΕΡΗΣΙΑ ΠΙΣΤΩΣΗ ΣΤΙΣ 12:00 UTC</strong>"
+                ]
+        ],
+        "cs": [
+                "SLOTOVÝ UVÍTACÍ",
+                "BALÍČEK",
+                "VÝHRY BEZ POŽADAVKU NA PROTOČENÍ • BONUS 600 % + 250 SPINŮ ZDARMA",
+                "SLOTOVÝ UVÍTACÍ BALÍČEK",
+                [
+                        "<strong>PENĚŽNÍ VÝHRY BEZ POŽADAVKU NA PROTOČENÍ</strong> — bez požadavku na protočení způsobilých peněžních výher",
+                        "<strong>VELKÁ VÝHRA? NECHTE SI JI</strong> — bez požadavků na protočení u způsobilých výher",
+                        "<strong>UVÍTACÍ BONUS 600 %</strong> + <strong>250 SPINŮ ZDARMA</strong>",
+                        "<strong>10% DENNÍ CASHBACK</strong> — připsán následující den",
+                        "<strong>DENNÍ PŘIPSÁNÍ VE 12:00 UTC</strong>"
+                ]
+        ],
+        "da": [
+                "SLOTS VELKOMST",
+                "PAKKE",
+                "GEVINSTER UDEN OMSÆTNINGSKRAV • 600% BONUS + 250 GRATIS SPINS",
+                "SLOTS VELKOMSTPAKKE",
+                [
+                        "<strong>KONTANTGEVINSTER UDEN OMSÆTNINGSKRAV</strong> — ingen omsætningskrav på kvalificerende kontantgevinster",
+                        "<strong>STOR GEVINST? BEHOLD DEN</strong> — ingen omsætningskrav på kvalificerende gevinster",
+                        "<strong>600% VELKOMSTBONUS</strong> + <strong>250 GRATIS SPINS</strong>",
+                        "<strong>10% DAGLIG CASHBACK</strong> — indsættes næste dag",
+                        "<strong>DAGLIG UDBETALING KL. 12:00 UTC</strong>"
+                ]
+        ],
+        "et": [
+                "SLOTIMÄNGU TERVITUS",
+                "PAKETT",
+                "VÕIDUD ILMA LÄBIMÄNGIMISNÕUDETA • 600% BOONUS + 250 TASUTA KEERUTUST",
+                "SLOTIMÄNGU TERVITUSPAKETT",
+                [
+                        "<strong>RAHAVÕIDUD ILMA LÄBIMÄNGIMISNÕUDETA</strong> — sobivatele rahalistele võitudele ei kehti läbimängimisnõuet",
+                        "<strong>SUUR VÕIT? JÄTA SEE ENDALE</strong> — sobivatele võitudele ei kehti läbimängimisnõuet",
+                        "<strong>600% TERVITUSBOONUS</strong> + <strong>250 TASUTA KEERUTUST</strong>",
+                        "<strong>10% IGAPÄEVANE RAHA TAGASI</strong> — kantakse kontole järgmisel päeval",
+                        "<strong>IGAPÄEVANE VÄLJAMAKSE KELL 12:00 UTC</strong>"
+                ]
+        ],
+        "fi": [
+                "SLOTTIEN TERVETULOA",
+                "PAKETTI",
+                "VOITOT ILMAN KIERRÄTYSVAATIMUSTA • 600% BONUS + 250 ILMAISKIERROSTA",
+                "SLOTTIEN TERVETULOPAKETTI",
+                [
+                        "<strong>RAHAVOITOT ILMAN KIERRÄTYSVAATIMUSTA</strong> — ehdollisiin rahavoittoihin ei liity kierrätysvaatimusta",
+                        "<strong>SUURI VOITTO? PIDÄ SE</strong> — ei kierrätysvaatimusta ehdollisille voitoille",
+                        "<strong>600% TERVETULOBONUS</strong> + <strong>250 ILMAISKIERROSTA</strong>",
+                        "<strong>10% PÄIVITTÄINEN CASHBACK</strong> — hyvitetään seuraavana päivänä",
+                        "<strong>PÄIVITTÄINEN HYVITYS KLO 12:00 UTC</strong>"
+                ]
+        ],
+        "hu": [
+                "SLOT ÜDVÖZLŐ",
+                "CSOMAG",
+                "NYEREMÉNYEK MEGFORGATÁSI KÖVETELMÉNY NÉLKÜL • 600% BÓNUSZ + 250 INGYEN PÖRGETÉS",
+                "SLOT ÜDVÖZLŐ CSOMAG",
+                [
+                        "<strong>PÉNZNYEREMÉNYEK MEGFORGATÁSI KÖVETELMÉNY NÉLKÜL</strong> — nincs megforgatási követelmény a jogosult pénznyereményekre",
+                        "<strong>NAGYOT NYERTÉL? TARTSD MEG</strong> — a jogosult nyereményekre nincs megforgatási követelmény",
+                        "<strong>600%-OS ÜDVÖZLŐ BÓNUSZ</strong> + <strong>250 INGYEN PÖRGETÉS</strong>",
+                        "<strong>10% NAPI CASHBACK</strong> — jóváírás a következő napon",
+                        "<strong>NAPI JÓVÁÍRÁS 12:00 UTC-KOR</strong>"
+                ]
+        ],
+        "lv": [
+                "SLOTU LAIPNI LŪGTS",
+                "PAKETE",
+                "LAIMESTI BE APGROZĪJUMA PRASĪBAS • 600% BONUSS + 250 BEZMAKSAS GRIEZIENI",
+                "SLOTU LAIPNI LŪGŠANAS PAKETE",
+                [
+                        "<strong>NAUDAS LAIMESTI BEZ APGROZĪJUMA PRASĪBAS</strong> — atbilstošajiem naudas laimestiem nav apgrozījuma prasības",
+                        "<strong>LIELS LAIMESTS? PATURET TO</strong> — bez apgrozījuma prasības atbilstošajiem laimestiem",
+                        "<strong>600% SĀKUMA BONUSS</strong> + <strong>250 BEZMAKSAS GRIEZIENI</strong>",
+                        "<strong>10% IKDIENAS CASHBACK</strong> — ieskaita nākamajā dienā",
+                        "<strong>IKDIENAS IESKAITĪJUMS PLKST. 12:00 UTC</strong>"
+                ]
+        ],
+        "lt": [
+                "SLOTŲ SVEIKINIMO",
+                "PAKETAS",
+                "LAIMĖJIMAI BE APYVARTOS REIKALAVIMO • 600% PREMIJA + 250 NEMOKAMŲ SUKIMŲ",
+                "SLOTŲ SVEIKINIMO PAKETAS",
+                [
+                        "<strong>PINIGINIAI LAIMĖJIMAI BE APYVARTOS REIKALAVIMO</strong> — tinkamiems piniginiams laimėjimams netaikomas apyvartos reikalavimas",
+                        "<strong>DIDELIS LAIMĖJIMAS? PASILIKITE JĮ</strong> — tinkamiems laimėjimams netaikomas apyvartos reikalavimas",
+                        "<strong>600% SVEIKINIMO PREMIJA</strong> + <strong>250 NEMOKAMŲ SUKIMŲ</strong>",
+                        "<strong>10% KASDIENIS CASHBACK</strong> — įskaitomas kitą dieną",
+                        "<strong>KASDIENIS ĮSKAITYMAS 12:00 UTC</strong>"
+                ]
+        ],
+        "pl": [
+                "POWITALNY PAKIET SLOTÓW",
+                "PAKIET",
+                "WYGRANE BEZ WYMOGU OBROTU • 600% BONUSU + 250 DARMOWYCH SPINÓW",
+                "POWITALNY PAKIET SLOTÓW",
+                [
+                        "<strong>WYGRANE PIENIĘŻNE BEZ WYMOGU OBROTU</strong> — brak wymogu obrotu dla kwalifikujących się wygranych pieniężnych",
+                        "<strong>DUŻA WYGRANA? ZATRZYMAJ JĄ</strong> — bez wymogu obrotu dla kwalifikujących się wygranych",
+                        "<strong>600% BONUSU POWITALNEGO</strong> + <strong>250 DARMOWYCH SPINÓW</strong>",
+                        "<strong>10% CODZIENNEGO CASHBACKU</strong> — dopisywane następnego dnia",
+                        "<strong>CODZIENNA WYPŁATA O 12:00 UTC</strong>"
+                ]
+        ],
+        "ro": [
+                "BUN VENIT LA SLOTURI",
+                "PACHET",
+                "CÂȘTIGURI FĂRĂ CERINȚĂ DE RULAJ • BONUS 600% + 250 ROTIRI GRATUITE",
+                "PACHET DE BUN VENIT LA SLOTURI",
+                [
+                        "<strong>CÂȘTIGURI ÎN BANI FĂRĂ CERINȚĂ DE RULAJ</strong> — fără cerință de rulaj pentru câștigurile eligibile",
+                        "<strong>AI CÂȘTIGAT MULT? PĂSTREAZĂ-ȚI CÂȘTIGUL</strong> — fără cerințe de rulaj pentru câștigurile eligibile",
+                        "<strong>BONUS DE BUN VENIT 600%</strong> + <strong>250 ROTIRI GRATUITE</strong>",
+                        "<strong>10% CASHBACK ZILNIC</strong> — creditat în ziua următoare",
+                        "<strong>CREDITARE ZILNICĂ LA 12:00 UTC</strong>"
+                ]
+        ],
+        "sk": [
+                "SLOTOVÝ UVÍTACÍ",
+                "BALÍČEK",
+                "VÝHRY BEZ POŽIADAVKY NA PRETOČENIE • BONUS 600 % + 250 SPINOV ZADARMO",
+                "SLOTOVÝ UVÍTACÍ BALÍČEK",
+                [
+                        "<strong>PEŇAŽNÉ VÝHRY BEZ POŽIADAVKY NA PRETOČENIE</strong> — bez požiadavky na pretočenie oprávnených peňažných výhier",
+                        "<strong>VEĽKÁ VÝHRA? NECHAJTE SI JU</strong> — bez požiadaviek na pretočenie pri oprávnených výhrach",
+                        "<strong>UVÍTACÍ BONUS 600 %</strong> + <strong>250 SPINOV ZADARMO</strong>",
+                        "<strong>10% DENNÝ CASHBACK</strong> — pripísaný nasledujúci deň",
+                        "<strong>DENNÉ PRIPÍSANIE O 12:00 UTC</strong>"
+                ]
+        ],
+        "sl": [
+                "SLOTI DOBRODOŠLICE",
+                "PAKET",
+                "DOBITKI BREZ ZAHTEVE PO OBRATU • 600% BONUS + 250 BREZPLAČNIH VRTLJAJEV",
+                "PAKET DOBRODOŠLICE ZA IGRE NA SREČO",
+                [
+                        "<strong>DENARNI DOBITKI BREZ ZAHTEVE PO OBRATU</strong> — brez zahteve po obračanju za upravičene denarne dobitke",
+                        "<strong>VELIK DOBITEK? OBDRŽITE GA</strong> — brez zahteve po obratu za upravičene dobitke",
+                        "<strong>600% BONUS DOBRODOŠLICE</strong> + <strong>250 BREZPLAČNIH VRTLJAJEV</strong>",
+                        "<strong>10% DNEVNI CASHBACK</strong> — pripisan naslednji dan",
+                        "<strong>DNEVNO IZPLAČILO OB 12:00 UTC</strong>"
+                ]
+        ],
+        "sv": [
+                "SLOTS VÄLKOMST",
+                "PAKET",
+                "VINSTER UTAN OMSÄTTNINGSKRAV • 600% BONUS + 250 GRATISSPINS",
+                "SLOTS VÄLKOMSTPAKET",
+                [
+                        "<strong>PENNINGVINSTER UTAN OMSÄTTNINGSKRAV</strong> — inget omsättningskrav på kvalificerade kontantvinster",
+                        "<strong>STORVINST? BEHÅLL DEN</strong> — inga omsättningskrav på kvalificerade vinster",
+                        "<strong>600% VÄLKOMSTBONUS</strong> + <strong>250 GRATISSPINS</strong>",
+                        "<strong>10% DAGLIG CASHBACK</strong> — krediteras nästa dag",
+                        "<strong>DAGLIG UTBETALNING KL. 12:00 UTC</strong>"
+                ]
+        ]
+};
+
     function renderPage(detectedGeo) {
         const config = COUNTRY_CONFIGS[detectedGeo] || COUNTRY_CONFIGS["DEFAULT"];
+        const offer = LOCALIZED_OFFERS[config.lang] || LOCALIZED_OFFERS.en;
 
         // Update HTML Language & Metadata
         document.documentElement.lang = config.lang;
@@ -1331,9 +1622,9 @@
         document.getElementById('geo-pill-notice').innerText = config.notice;
 
         // Dynamic Hero Offer Strings
-        document.getElementById('dynamic-bonus-prefix').innerText = config.bonusPrefix;
-        document.getElementById('dynamic-bonus-amount').innerText = config.bonusVal;
-        document.getElementById('dynamic-bonus-sub').innerText = config.bonusSub;
+        document.getElementById('dynamic-bonus-prefix').innerText = offer[0];
+        document.getElementById('dynamic-bonus-amount').innerText = offer[1];
+        document.getElementById('dynamic-bonus-sub').innerText = offer[2];
         document.getElementById('label-timer-expires').innerText = config.timerExpires;
         document.getElementById('label-live-winners').innerText = config.liveWinners;
         document.getElementById('label-trust-fairplay').innerText = config.trustFairplay;
@@ -1364,8 +1655,8 @@
         document.getElementById('link-terms').innerText = config.linkTerms;
         document.getElementById('link-privacy').innerText = config.linkPrivacy;
         document.getElementById('link-responsible').innerText = config.linkResponsible;
-        document.getElementById('sticky-title').innerText = config.stickyTitle;
-        document.getElementById('sticky-bonus-text').innerText = `${config.bonusVal} ${config.bonusSub}`;
+        document.getElementById('sticky-title').innerText = offer[3];
+        document.getElementById('sticky-bonus-text').innerText = `${offer[1]} ${offer[2]}`;
 
         // Update CTA Buttons
         const ctaElements = document.getElementsByClassName('cta-text');
@@ -1380,7 +1671,7 @@
 
         // Render Key Benefits
         const benefitsContainer = document.getElementById('dynamic-benefits');
-        benefitsContainer.innerHTML = config.benefits.map(b => `
+        benefitsContainer.innerHTML = offer[4].map(b => `
             <li class="flex items-center gap-2.5">
                 <i class="fa-solid fa-circle-check text-emerald-400 text-base shrink-0"></i>
                 <span>${b}</span>
